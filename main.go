@@ -85,7 +85,9 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	_ = handlers.InstallRoutes(staticFS, engine)
+	if err := handlers.InstallRoutes(staticFS, engine); err != nil {
+		return err
+	}
 	srv := &http.Server{
 		Addr:    *bindAddr,
 		Handler: engine,
