@@ -18,9 +18,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"time"
 
-	"github.com/getsentry/sentry-go"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"github.com/spwg/personal-website/internal/handlers"
@@ -79,28 +77,8 @@ func installMiddleware(r *gin.Engine) error {
 	return nil
 }
 
-func initializeSentry() (func(), error) {
-	if os.Getenv("SENTRY_DSN") == "" {
-		return func() {}, nil
-	}
-	glog.Infof("Initializing Sentry")
-	options := sentry.ClientOptions{
-		Dsn:              os.Getenv("SENTRY_DSN"),
-		TracesSampleRate: 1.0,
-	}
-	if err := sentry.Init(options); err != nil {
-		return func() {}, fmt.Errorf("sentry.Init: %v", err)
-	}
-	return func() { sentry.Flush(2 * time.Second) }, nil
-}
-
 func run() error {
 	defer glog.Flush()
-	flush, err := initializeSentry()
-	if err != nil {
-		return err
-	}
-	defer flush()
 	engine := gin.New()
 	installMiddleware(engine)
 	staticFS, err := fs.Sub(embeddedStatic, "static")
