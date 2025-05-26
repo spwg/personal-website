@@ -1,10 +1,11 @@
 module github.com/spwg/personal-website
 
-go 1.22
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/golang/glog v1.2.1
 	github.com/unrolled/secure v1.17.0
 )
