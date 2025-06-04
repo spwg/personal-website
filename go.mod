@@ -1,5 +1,7 @@
 module github.com/spwg/personal-website
 
+// If updating the go version, also update the go version in the Dockerfile.
+
 go 1.24
 
 require (
