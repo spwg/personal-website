@@ -361,18 +361,17 @@ function showMessage(msg) {
 
 // Update share button visibility
 function updateShareButton() {
-  if (gameWon && isMobileDevice()) {
+  if (gameWon || gameLost) {
     shareContainer.style.display = 'block';
   } else {
     shareContainer.style.display = 'none';
   }
 }
 
-// Share result
-function shareResult() {
-  if (!gameWon) return;
-  
-  let shareText = `Wordle ${currentDate} ${attempt}/5\n\n`;
+// Generate share text
+function generateShareText() {
+  const result = gameWon ? `${attempt}/5` : 'X/5';
+  let shareText = `Wordle ${currentDate} ${result}\n\n`;
   
   guesses.forEach(guess => {
     guess.status.forEach(status => {
@@ -387,8 +386,44 @@ function shareResult() {
     shareText += '\n';
   });
   
-  const smsLink = `sms:?body=${encodeURIComponent(shareText)}`;
-  window.location.href = smsLink;
+  return shareText;
+}
+
+// Share result
+async function shareResult() {
+  if (!gameWon && !gameLost) return;
+  
+  const shareText = generateShareText();
+  
+  // Try Web Share API first (works on mobile and modern desktop browsers)
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        text: shareText
+      });
+      return;
+    } catch (error) {
+      // User cancelled or error occurred, fall through to clipboard
+      if (error.name !== 'AbortError') {
+        console.error('Error sharing:', error);
+      }
+    }
+  }
+  
+  // Fallback: Copy to clipboard
+  try {
+    await navigator.clipboard.writeText(shareText);
+    showMessage('Result copied to clipboard!');
+    setTimeout(() => {
+      if (messageEl.textContent === 'Result copied to clipboard!') {
+        messageEl.textContent = '';
+      }
+    }, 2000);
+  } catch (error) {
+    console.error('Error copying to clipboard:', error);
+    // Final fallback: Show text in an alert or message
+    showMessage('Share feature not available. Please copy the result manually.');
+  }
 }
 
 // Generate date buttons for last 7 days
