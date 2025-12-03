@@ -1,69 +1,34 @@
-// Word list - common 5-letter words (subset of Wordle word list)
-const WORD_LIST = [
-  'ABOUT', 'ABOVE', 'ABUSE', 'ACTOR', 'ACUTE', 'ADMIT', 'ADOPT', 'ADULT', 'AFTER', 'AGAIN',
-  'AGENT', 'AGREE', 'AHEAD', 'ALARM', 'ALBUM', 'ALERT', 'ALIEN', 'ALIGN', 'ALIKE', 'ALIVE',
-  'ALLOW', 'ALONE', 'ALONG', 'ALTER', 'AMONG', 'ANGER', 'ANGLE', 'ANGRY', 'APART', 'APPLE',
-  'APPLY', 'ARENA', 'ARGUE', 'ARISE', 'ARRAY', 'ARROW', 'ASIDE', 'ASSET', 'AVOID', 'AWAKE',
-  'AWARD', 'AWARE', 'BADLY', 'BAKER', 'BASES', 'BASIC', 'BEACH', 'BEGAN', 'BEGIN', 'BEING',
-  'BELOW', 'BENCH', 'BILLY', 'BIRTH', 'BLACK', 'BLAME', 'BLANK', 'BLAST', 'BLEND', 'BLESS',
-  'BLIND', 'BLOCK', 'BLOOD', 'BLOOM', 'BLOWN', 'BLUES', 'BOARD', 'BOAST', 'BOBBY', 'BONUS',
-  'BOOST', 'BOOTH', 'BOUND', 'BRAIN', 'BRAND', 'BRASS', 'BRAVE', 'BREAD', 'BREAK', 'BREED',
-  'BRIEF', 'BRING', 'BROAD', 'BROKE', 'BROWN', 'BRUSH', 'BUDDY', 'BUILD', 'BUILT', 'BUNCH',
-  'BURST', 'CABLE', 'CALIF', 'CARRY', 'CATCH', 'CAUSE', 'CHAIN', 'CHAIR', 'CHAOS', 'CHARM',
-  'CHART', 'CHASE', 'CHEAP', 'CHECK', 'CHEST', 'CHIEF', 'CHILD', 'CHINA', 'CHOSE', 'CHUNK',
-  'CIVIL', 'CLAIM', 'CLASS', 'CLEAN', 'CLEAR', 'CLICK', 'CLIMB', 'CLOCK', 'CLOSE', 'CLOUD',
-  'COACH', 'COAST', 'COULD', 'COUNT', 'COURT', 'COVER', 'CRAFT', 'CRASH', 'CRAZY', 'CREAM',
-  'CRIME', 'CROSS', 'CROWD', 'CROWN', 'CRUDE', 'CURVE', 'CYCLE', 'DAILY', 'DANCE', 'DATED',
-  'DEALT', 'DEATH', 'DEBUT', 'DELAY', 'DELTA', 'DENSE', 'DEPTH', 'DOING', 'DOUBT', 'DOZEN',
-  'DRAFT', 'DRAMA', 'DRANK', 'DRAWN', 'DREAM', 'DRESS', 'DRILL', 'DRINK', 'DRIVE', 'DROVE',
-  'DYING', 'EAGER', 'EARLY', 'EARTH', 'EIGHT', 'ELITE', 'EMPTY', 'ENEMY', 'ENJOY', 'ENTER',
-  'ENTRY', 'EQUAL', 'ERROR', 'EVENT', 'EVERY', 'EXACT', 'EXIST', 'EXTRA', 'FAITH', 'FALSE',
-  'FANCY', 'FATAL', 'FAULT', 'FIBER', 'FIELD', 'FIERY', 'FIFTH', 'FIFTY', 'FIGHT', 'FINAL',
-  'FIRST', 'FIXED', 'FLASH', 'FLEET', 'FLESH', 'FLOAT', 'FLOOD', 'FLOOR', 'FLUID', 'FOCUS',
-  'FORCE', 'FORTH', 'FORTY', 'FORUM', 'FOUND', 'FRAME', 'FRANK', 'FRAUD', 'FRESH', 'FRONT',
-  'FROST', 'FRUIT', 'FULLY', 'FUNNY', 'GIANT', 'GIVEN', 'GLASS', 'GLOBE', 'GLORY', 'GOLDEN',
-  'GRACE', 'GRADE', 'GRAIN', 'GRAND', 'GRANT', 'GRASS', 'GRAVE', 'GREAT', 'GREEN', 'GROSS',
-  'GROUP', 'GROWN', 'GUARD', 'GUESS', 'GUEST', 'GUIDE', 'HAPPY', 'HARRY', 'HEART', 'HEAVY',
-  'HENCE', 'HENRY', 'HORSE', 'HOTEL', 'HOUSE', 'HUMAN', 'HURRY', 'IMAGE', 'INDEX', 'INNER',
-  'INPUT', 'INTRO', 'ISSUE', 'JAPAN', 'JIMMY', 'JOINT', 'JONES', 'JUDGE', 'KNOWN', 'LABEL',
-  'LARGE', 'LASER', 'LATER', 'LAUGH', 'LAYER', 'LEARN', 'LEASE', 'LEAST', 'LEAVE', 'LEGAL',
-  'LEVEL', 'LIGHT', 'LIMIT', 'LINKS', 'LIVES', 'LOCAL', 'LOOSE', 'LOWER', 'LUCKY', 'LUNCH',
-  'LYING', 'MAGIC', 'MAJOR', 'MAKER', 'MARCH', 'MARIA', 'MATCH', 'MAYBE', 'MAYOR', 'MEANT',
-  'MEDIA', 'METAL', 'MIGHT', 'MINOR', 'MINUS', 'MIXED', 'MODEL', 'MONEY', 'MONTH', 'MORAL',
-  'MOTOR', 'MOUNT', 'MOUSE', 'MOUTH', 'MOVED', 'MOVIE', 'MUSIC', 'NEEDS', 'NEVER', 'NEWLY',
-  'NIGHT', 'NOISE', 'NORTH', 'NOTED', 'NOVEL', 'NURSE', 'OCCUR', 'OCEAN', 'OFFER', 'OFTEN',
-  'ORDER', 'ORGAN', 'OTHER', 'OUGHT', 'PAINT', 'PANEL', 'PAPER', 'PARTY', 'PEACE', 'PETER',
-  'PHASE', 'PHONE', 'PHOTO', 'PIANO', 'PIECE', 'PILOT', 'PITCH', 'PLACE', 'PLAIN', 'PLANE',
-  'PLANT', 'PLATE', 'POINT', 'POUND', 'POWER', 'PRESS', 'PRICE', 'PRIDE', 'PRIME', 'PRINT',
-  'PRIOR', 'PRIZE', 'PROOF', 'PROUD', 'PROVE', 'QUEEN', 'QUICK', 'QUIET', 'QUITE', 'RADIO',
-  'RAISE', 'RANGE', 'RAPID', 'RATIO', 'REACH', 'READY', 'REALM', 'REBEL', 'REFER', 'RELAX',
-  'REPLY', 'RIDER', 'RIDGE', 'RIGHT', 'RIGID', 'RISKY', 'RIVER', 'ROBOT', 'ROCKY', 'ROMAN',
-  'ROUGH', 'ROUND', 'ROYAL', 'RURAL', 'SCALE', 'SCENE', 'SCOPE', 'SCORE', 'SENSE', 'SERVE',
-  'SEVEN', 'SHADE', 'SHAKE', 'SHALL', 'SHAPE', 'SHARE', 'SHARP', 'SHEET', 'SHELF', 'SHELL',
-  'SHIFT', 'SHINE', 'SHIRT', 'SHOCK', 'SHOOT', 'SHORE', 'SHORT', 'SHOWN', 'SIDES', 'SIGHT',
-  'SINCE', 'SIXTH', 'SIXTY', 'SIZED', 'SKILL', 'SLEEP', 'SLIDE', 'SMALL', 'SMART', 'SMILE',
-  'SMITH', 'SMOKE', 'SNOWY', 'SOLAR', 'SOLID', 'SOLVE', 'SORRY', 'SOUND', 'SOUTH', 'SPACE',
-  'SPARE', 'SPEAK', 'SPEED', 'SPEND', 'SPENT', 'SPLIT', 'SPOKE', 'SPORT', 'STAFF', 'STAGE',
-  'STAKE', 'STAND', 'START', 'STATE', 'STEAM', 'STEEL', 'STEEP', 'STEER', 'STICK', 'STILL',
-  'STOCK', 'STONE', 'STOOD', 'STORE', 'STORM', 'STORY', 'STRIP', 'STUCK', 'STUDY', 'STUFF',
-  'STYLE', 'SUGAR', 'SUITE', 'SUPER', 'SWEET', 'TABLE', 'TAKEN', 'TASTE', 'TAXES', 'TEACH',
-  'TEAMS', 'TEETH', 'TERMS', 'TEXAS', 'THANK', 'THEFT', 'THEIR', 'THEME', 'THERE', 'THESE',
-  'THICK', 'THING', 'THINK', 'THIRD', 'THOSE', 'THREE', 'THREW', 'THROW', 'THUMB', 'TIGHT',
-  'TIMER', 'TIRED', 'TITLE', 'TODAY', 'TOPIC', 'TOTAL', 'TOUCH', 'TOUGH', 'TOWER', 'TRACK',
-  'TRADE', 'TRAIN', 'TREAT', 'TREND', 'TRIAL', 'TRIBE', 'TRICK', 'TRIED', 'TRIES', 'TRULY',
-  'TRUNK', 'TRUST', 'TRUTH', 'TWICE', 'TWIST', 'TYLER', 'UNCLE', 'UNDER', 'UNDUE', 'UNION',
-  'UNITY', 'UNTIL', 'UPPER', 'UPSET', 'URBAN', 'USAGE', 'USING', 'USUAL', 'VALUE', 'VIDEO',
-  'VIRUS', 'VISIT', 'VITAL', 'VOCAL', 'VOICE', 'WASTE', 'WATCH', 'WATER', 'WHEEL', 'WHERE',
-  'WHICH', 'WHILE', 'WHITE', 'WHOLE', 'WHOSE', 'WOMAN', 'WOMEN', 'WORLD', 'WORRY', 'WORSE',
-  'WORST', 'WORTH', 'WOULD', 'WRITE', 'WRONG', 'WROTE', 'YARDS', 'YEARS', 'YOUNG', 'YOURS',
-  'YOUTH'
-];
+// Word lists loaded from JSON files
+let WORD_LIST = []; // Answer words (for daily word selection)
+let VALID_GUESSES = new Set(); // All valid guess words (dictionary)
 
-// Valid guess words (can include more words than the answer list)
-const VALID_GUESSES = new Set([...WORD_LIST]);
+// Load word lists from JSON files
+async function loadWordLists() {
+  try {
+    const [answersResponse, dictionaryResponse] = await Promise.all([
+      fetch('/data/wordle-answers.json'),
+      fetch('/data/wordle-dictionary.json')
+    ]);
+    
+    if (!answersResponse.ok || !dictionaryResponse.ok) {
+      throw new Error('Failed to load word lists');
+    }
+    
+    WORD_LIST = await answersResponse.json();
+    const dictionary = await dictionaryResponse.json();
+    VALID_GUESSES = new Set(dictionary);
+  } catch (error) {
+    console.error('Error loading word lists:', error);
+    showMessage('Error loading word lists. Please refresh the page.');
+    throw error;
+  }
+}
 
 // Get word for a specific date (deterministic)
 function getWordForDate(dateStr) {
+  if (WORD_LIST.length === 0) {
+    throw new Error('Word list not loaded');
+  }
   const date = new Date(dateStr + 'T00:00:00');
   const startDate = new Date('2024-01-01T00:00:00');
   const diffTime = date - startDate;
@@ -95,35 +60,47 @@ const shareContainer = document.getElementById('share-container');
 const shareButton = document.getElementById('share-button');
 
 // Initialize
-function init() {
-  dateSelector.value = currentDate;
-  dateSelector.max = currentDate; // Can't select future dates
+async function init() {
+  // Show loading message
+  showMessage('Loading word lists...');
   
-  dateSelector.addEventListener('change', (e) => {
-    currentDate = e.target.value;
-    loadGame();
-  });
-
-  shareButton.addEventListener('click', shareResult);
-
-  // Keyboard input
-  document.addEventListener('keydown', handleKeyPress);
-  
-  // On-screen keyboard
-  document.querySelectorAll('.key').forEach(key => {
-    key.addEventListener('click', () => {
-      const keyValue = key.getAttribute('data-key');
-      if (keyValue === 'Enter') {
-        submitGuess();
-      } else if (keyValue === 'Backspace') {
-        deleteLetter();
-      } else {
-        addLetter(keyValue);
-      }
+  try {
+    // Load word lists first
+    await loadWordLists();
+    
+    dateSelector.value = currentDate;
+    dateSelector.max = currentDate; // Can't select future dates
+    
+    dateSelector.addEventListener('change', (e) => {
+      currentDate = e.target.value;
+      loadGame();
     });
-  });
 
-  loadGame();
+    shareButton.addEventListener('click', shareResult);
+
+    // Keyboard input
+    document.addEventListener('keydown', handleKeyPress);
+    
+    // On-screen keyboard
+    document.querySelectorAll('.key').forEach(key => {
+      key.addEventListener('click', () => {
+        const keyValue = key.getAttribute('data-key');
+        if (keyValue === 'Enter') {
+          submitGuess();
+        } else if (keyValue === 'Backspace') {
+          deleteLetter();
+        } else {
+          addLetter(keyValue);
+        }
+      });
+    });
+
+    // Clear loading message and load game
+    showMessage('');
+    loadGame();
+  } catch (error) {
+    // Error already shown in loadWordLists
+  }
 }
 
 // Load game state from localStorage or initialize new game
