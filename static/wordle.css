@@ -181,9 +181,14 @@
 }
 
 .share-container {
-  text-align: center;
-  display: block;
-  margin: 20px 0 0 0;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin-top: 24px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
 }
 
 .share-button {
@@ -196,6 +201,8 @@
   cursor: pointer;
   font-weight: bold;
   flex: 0 0 auto;
+  min-width: 120px;
+  box-sizing: border-box;
 }
 
 .share-button:hover {
