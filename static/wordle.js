@@ -371,7 +371,7 @@ function updateShareButton() {
 // Generate share text
 function generateShareText() {
   const result = gameWon ? `${attempt}/5` : 'X/5';
-  let shareText = `Wordle ${currentDate} ${result}\n\n`;
+  let shareText = `spencergreene.com/wordle ${currentDate} ${result}\n\n`;
   
   guesses.forEach(guess => {
     guess.status.forEach(status => {
