@@ -321,7 +321,7 @@ function updateMessage() {
 
 function showMessage(msg) {
   messageEl.textContent = msg;
-  if (msg) {
+  if (msg && !gameWon && !gameLost) {
     setTimeout(() => {
       if (messageEl.textContent === msg) {
         messageEl.textContent = '';
