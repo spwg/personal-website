@@ -27,6 +27,15 @@ func (s *Server) css(c *gin.Context) {
 	c.FileFromFS(c.Params.ByName("path"), http.FS(s.static))
 }
 
+func (s *Server) data(c *gin.Context) {
+	filePath := "data/" + c.Params.ByName("path")
+	c.FileFromFS(filePath, http.FS(s.static))
+}
+
+func (s *Server) wordle(c *gin.Context) {
+	c.FileFromFS("wordle.html", http.FS(s.static))
+}
+
 // InstallRoutes registers the server's routes on the given [*gin.Engine].
 func InstallRoutes(static fs.FS, engine *gin.Engine) error {
 	s := &Server{
@@ -34,5 +43,8 @@ func InstallRoutes(static fs.FS, engine *gin.Engine) error {
 	}
 	engine.GET("/", s.root)
 	engine.GET("/css/:path", s.css)
+	engine.GET("/js/:path", s.js)
+	engine.GET("/data/:path", s.data)
+	engine.GET("/wordle", s.wordle)
 	return nil
 }
