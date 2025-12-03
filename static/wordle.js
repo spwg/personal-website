@@ -361,7 +361,7 @@ function showMessage(msg) {
 // Update share button visibility
 function updateShareButton() {
   if (gameWon || gameLost) {
-    shareContainer.style.display = 'block';
+    shareContainer.style.display = 'flex';
     shareButton.style.display = 'block';
   } else {
     shareContainer.style.display = 'none';
