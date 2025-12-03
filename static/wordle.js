@@ -91,7 +91,6 @@ async function init() {
     });
 
     shareButton.addEventListener('click', shareResult);
-
     // Keyboard input
     document.addEventListener('keydown', handleKeyPress);
     
@@ -363,6 +362,7 @@ function showMessage(msg) {
 function updateShareButton() {
   if (gameWon || gameLost) {
     shareContainer.style.display = 'block';
+    shareButton.style.display = 'block';
   } else {
     shareContainer.style.display = 'none';
   }
@@ -389,13 +389,12 @@ function generateShareText() {
   return shareText;
 }
 
-// Share result
+// Share result using Web Share API
 async function shareResult() {
   if (!gameWon && !gameLost) return;
   
   const shareText = generateShareText();
   
-  // Try Web Share API first (works on mobile and modern desktop browsers)
   if (navigator.share) {
     try {
       await navigator.share({
@@ -403,14 +402,12 @@ async function shareResult() {
       });
       return;
     } catch (error) {
-      // User cancelled or error occurred, fall through to clipboard
-      if (error.name !== 'AbortError') {
-        console.error('Error sharing:', error);
-      }
+      if (error.name === 'AbortError') return;
+      console.error('Error sharing:', error);
+      return;
     }
   }
-  
-  // Fallback: Copy to clipboard
+  // Fallback if no Web Share API
   try {
     await navigator.clipboard.writeText(shareText);
     showMessage('Result copied to clipboard!');
@@ -421,8 +418,7 @@ async function shareResult() {
     }, 2000);
   } catch (error) {
     console.error('Error copying to clipboard:', error);
-    // Final fallback: Show text in an alert or message
-    showMessage('Share feature not available. Please copy the result manually.');
+    showMessage('Failed to copy. Please try again.');
   }
 }
 
@@ -480,4 +476,5 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
 

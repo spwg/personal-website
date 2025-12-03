@@ -182,7 +182,8 @@
 
 .share-container {
   text-align: center;
-  margin: 20px 0;
+  display: block;
+  margin: 20px 0 0 0;
 }
 
 .share-button {
@@ -194,6 +195,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  flex: 0 0 auto;
 }
 
 .share-button:hover {
