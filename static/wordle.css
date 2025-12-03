@@ -222,6 +222,7 @@
   cursor: pointer;
   text-transform: uppercase;
   color: #000000;
+  transition: background-color 0.1s, transform 0.1s;
 }
 
 .key:hover {
@@ -230,6 +231,12 @@
 
 .key:active {
   background-color: #a8abaf;
+}
+
+.key.pressed {
+  background-color: #a8abaf;
+  transform: scale(0.95);
+  transition: background-color 0.1s, transform 0.1s;
 }
 
 .key.key-enter,

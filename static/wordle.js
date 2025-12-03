@@ -99,6 +99,7 @@ async function init() {
     document.querySelectorAll('.key').forEach(key => {
       key.addEventListener('click', () => {
         const keyValue = key.getAttribute('data-key');
+        highlightKey(keyValue);
         if (keyValue === 'Enter') {
           submitGuess();
         } else if (keyValue === 'Backspace') {
@@ -229,15 +230,29 @@ function evaluateGuess(guess, target) {
   return status;
 }
 
+// Highlight a key on the keyboard
+function highlightKey(keyValue) {
+  const key = document.querySelector(`.key[data-key="${keyValue}"]`);
+  if (key) {
+    key.classList.add('pressed');
+    setTimeout(() => {
+      key.classList.remove('pressed');
+    }, 150);
+  }
+}
+
 // Handle keyboard input
 function handleKeyPress(e) {
   if (gameWon || gameLost) return;
   
   if (e.key === 'Enter') {
+    highlightKey('Enter');
     submitGuess();
   } else if (e.key === 'Backspace') {
+    highlightKey('Backspace');
     deleteLetter();
   } else if (e.key.length === 1 && /[A-Za-z]/.test(e.key)) {
+    highlightKey(e.key.toUpperCase());
     addLetter(e.key.toUpperCase());
   }
 }
