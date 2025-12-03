@@ -3,28 +3,125 @@
   margin: 0 auto;
   padding: 20px;
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  position: relative;
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .wordle-container h1 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
-.date-selector-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.date-selector-container label {
-  margin-right: 10px;
-}
-
-.date-selector-container input[type="date"] {
+.menu-button {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
   padding: 8px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+  background-color: #f0f0f0;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.date-menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #ffffff;
+  border: 2px solid #d3d6da;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.date-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #d3d6da;
+  font-weight: bold;
+}
+
+.close-menu-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  color: #000000;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.close-menu-button:hover {
+  background-color: #f0f0f0;
+}
+
+.date-buttons {
+  padding: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.date-button {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 4px;
+  background-color: #ffffff;
+  border: 1px solid #d3d6da;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.date-button:hover {
+  background-color: #f0f0f0;
+}
+
+.date-button.active {
+  background-color: #6aaa64;
+  color: #ffffff;
+  border-color: #6aaa64;
+}
+
+.date-button:last-child {
+  margin-bottom: 0;
 }
 
 .game-board {
@@ -165,6 +262,19 @@
     font-size: 1.8rem;
     margin-left: 16px;
     margin-right: 16px;
+  }
+
+  .menu-button {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .date-menu {
+    top: 50px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
   }
 
   .game-cell {

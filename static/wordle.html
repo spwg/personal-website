@@ -12,11 +12,19 @@
 
 <body>
   <div class="wordle-container">
-    <h1>Wordle</h1>
+    <div class="header-container">
+      <h1>Wordle</h1>
+      <button id="menu-button" class="menu-button" aria-label="Open menu">
+        <span class="menu-icon">☰</span>
+      </button>
+    </div>
     
-    <div class="date-selector-container">
-      <label for="date-selector">Select Date:</label>
-      <input type="date" id="date-selector" />
+    <div id="date-menu" class="date-menu" style="display: none;">
+      <div class="date-menu-header">
+        <span>Select Game</span>
+        <button id="close-menu-button" class="close-menu-button" aria-label="Close menu">×</button>
+      </div>
+      <div id="date-buttons" class="date-buttons"></div>
     </div>
 
     <div id="game-board" class="game-board"></div>

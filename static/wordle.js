@@ -55,7 +55,10 @@ let gameLost = false;
 // DOM elements
 const gameBoard = document.getElementById('game-board');
 const messageEl = document.getElementById('message');
-const dateSelector = document.getElementById('date-selector');
+const menuButton = document.getElementById('menu-button');
+const dateMenu = document.getElementById('date-menu');
+const closeMenuButton = document.getElementById('close-menu-button');
+const dateButtons = document.getElementById('date-buttons');
 const shareContainer = document.getElementById('share-container');
 const shareButton = document.getElementById('share-button');
 
@@ -68,12 +71,23 @@ async function init() {
     // Load word lists first
     await loadWordLists();
     
-    dateSelector.value = currentDate;
-    dateSelector.max = currentDate; // Can't select future dates
+    // Generate last 7 days
+    generateDateButtons();
     
-    dateSelector.addEventListener('change', (e) => {
-      currentDate = e.target.value;
-      loadGame();
+    // Menu interactions
+    menuButton.addEventListener('click', () => {
+      dateMenu.style.display = dateMenu.style.display === 'none' ? 'block' : 'none';
+    });
+    
+    closeMenuButton.addEventListener('click', () => {
+      dateMenu.style.display = 'none';
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!dateMenu.contains(e.target) && !menuButton.contains(e.target)) {
+        dateMenu.style.display = 'none';
+      }
     });
 
     shareButton.addEventListener('click', shareResult);
@@ -360,6 +374,54 @@ function shareResult() {
   
   const smsLink = `sms:?body=${encodeURIComponent(shareText)}`;
   window.location.href = smsLink;
+}
+
+// Generate date buttons for last 7 days
+function generateDateButtons() {
+  dateButtons.innerHTML = '';
+  const today = new Date();
+  
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    const dateStr = date.toISOString().split('T')[0];
+    
+    const button = document.createElement('button');
+    button.className = 'date-button';
+    button.textContent = formatDate(date);
+    
+    if (dateStr === currentDate) {
+      button.classList.add('active');
+    }
+    
+    button.addEventListener('click', () => {
+      currentDate = dateStr;
+      loadGame();
+      generateDateButtons(); // Update active state
+      dateMenu.style.display = 'none';
+    });
+    
+    dateButtons.appendChild(button);
+  }
+}
+
+// Format date for display
+function formatDate(date) {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  
+  const isToday = date.toDateString() === today.toDateString();
+  const isYesterday = date.toDateString() === yesterday.toDateString();
+  
+  if (isToday) {
+    return 'Today';
+  } else if (isYesterday) {
+    return 'Yesterday';
+  } else {
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+  }
 }
 
 // Initialize when DOM is ready
