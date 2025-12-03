@@ -1,0 +1,186 @@
+.wordle-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}
+
+.wordle-container h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.date-selector-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.date-selector-container label {
+  margin-right: 10px;
+}
+
+.date-selector-container input[type="date"] {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.game-board {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.game-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.game-cell {
+  aspect-ratio: 1;
+  border: 2px solid #d3d6da;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.game-cell.filled {
+  border-color: #878a8c;
+}
+
+.game-cell.correct {
+  background-color: #6aaa64;
+  color: #ffffff;
+  border-color: #6aaa64;
+}
+
+.game-cell.present {
+  background-color: #c9b458;
+  color: #ffffff;
+  border-color: #c9b458;
+}
+
+.game-cell.absent {
+  background-color: #787c7e;
+  color: #ffffff;
+  border-color: #787c7e;
+}
+
+.message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 20px 0;
+  min-height: 30px;
+}
+
+.share-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.share-button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #6aaa64;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.share-button:hover {
+  background-color: #5a9a54;
+}
+
+.keyboard-container {
+  margin-top: 30px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.key {
+  padding: 12px 8px;
+  min-width: 40px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  background-color: #d3d6da;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.key:hover {
+  background-color: #c0c3c7;
+}
+
+.key:active {
+  background-color: #a8abaf;
+}
+
+.key.key-enter,
+.key.key-backspace {
+  min-width: 60px;
+  font-size: 0.75rem;
+}
+
+.key.correct {
+  background-color: #6aaa64;
+  color: #ffffff;
+}
+
+.key.present {
+  background-color: #c9b458;
+  color: #ffffff;
+}
+
+.key.absent {
+  background-color: #787c7e;
+  color: #ffffff;
+}
+
+@media (max-width: 700px) {
+  .wordle-container {
+    padding: 10px;
+  }
+
+  .wordle-container h1 {
+    font-size: 1.8rem;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .game-cell {
+    font-size: 1.5rem;
+  }
+
+  .key {
+    padding: 10px 6px;
+    min-width: 32px;
+    font-size: 0.8rem;
+  }
+
+  .key.key-enter,
+  .key.key-backspace {
+    min-width: 50px;
+    font-size: 0.7rem;
+  }
+}
+
