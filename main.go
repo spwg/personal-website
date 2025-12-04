@@ -1,12 +1,12 @@
 // Binary main runs a web server for my (Spencer Greene's) personal website.
 //
-// It runs on the Fly app platform (fly.io) in 2 regions, San Jose and Atlanta.
-// DNS is on Cloudflare, which also proxies requests through its CDN. There are
-// A and AAAA records that point to the app on Fly. When a request is made for
-// spencergreene.com, DNS resolution talks to the Cloudflare nameservers, which
-// return IP addresses that route to its own CDN. If there's no cache hit, it
-// sends the request to Fly. Fly terminates the TLS connection from Cloudflare
-// and forwards the request to this web server.
+// It runs on the Fly app platform (fly.io). DNS is on Cloudflare, which also
+// proxies requests through its CDN. There are A and AAAA records that point to
+// the app on Fly. When a request is made for spencergreene.com, DNS resolution
+// talks to the Cloudflare nameservers, which return IP addresses that route to
+// its own CDN. If there's no cache hit, it sends the request to Fly. Fly
+// terminates the TLS connection from Cloudflare and forwards the request to this
+// web server.
 package main
 
 import (
