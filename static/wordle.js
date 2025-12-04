@@ -9,11 +9,11 @@ async function loadWordLists() {
       fetch('/data/wordle-answers.json'),
       fetch('/data/wordle-dictionary.json')
     ]);
-    
+
     if (!answersResponse.ok || !dictionaryResponse.ok) {
       throw new Error('Failed to load word lists');
     }
-    
+
     WORD_LIST = await answersResponse.json();
     const dictionary = await dictionaryResponse.json();
     VALID_GUESSES = new Set(dictionary);
@@ -43,8 +43,26 @@ function isMobileDevice() {
     (window.innerWidth <= 700);
 }
 
+// Get date string in local timezone (YYYY-MM-DD)
+function getLocalISODate(date) {
+  const offset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - offset).toISOString().split('T')[0];
+}
+
 // Game state
-let currentDate = new Date().toISOString().split('T')[0];
+let currentDate = getLocalISODate(new Date());
+
+// Check URL for date parameter
+const urlParams = new URLSearchParams(window.location.search);
+const dateParam = urlParams.get('date');
+if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+  currentDate = dateParam;
+} else {
+  // If no date or invalid date, ensure URL has current date
+  const newUrl = new URL(window.location);
+  newUrl.searchParams.set('date', currentDate);
+  window.history.replaceState({ path: newUrl.href }, '', newUrl.href);
+}
 let currentWord = '';
 let guesses = [];
 let currentGuess = '';
@@ -66,23 +84,23 @@ const shareButton = document.getElementById('share-button');
 async function init() {
   // Show loading message
   showMessage('Loading word lists...');
-  
+
   try {
     // Load word lists first
     await loadWordLists();
-    
+
     // Generate last 7 days
     generateDateButtons();
-    
+
     // Menu interactions
     menuButton.addEventListener('click', () => {
       dateMenu.style.display = dateMenu.style.display === 'none' ? 'block' : 'none';
     });
-    
+
     closeMenuButton.addEventListener('click', () => {
       dateMenu.style.display = 'none';
     });
-    
+
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!dateMenu.contains(e.target) && !menuButton.contains(e.target)) {
@@ -93,7 +111,7 @@ async function init() {
     shareButton.addEventListener('click', shareResult);
     // Keyboard input
     document.addEventListener('keydown', handleKeyPress);
-    
+
     // On-screen keyboard
     document.querySelectorAll('.key').forEach(key => {
       key.addEventListener('click', () => {
@@ -121,9 +139,9 @@ async function init() {
 function loadGame() {
   const storageKey = `wordle-${currentDate}`;
   const savedState = localStorage.getItem(storageKey);
-  
+
   currentWord = getWordForDate(currentDate);
-  
+
   if (savedState) {
     const state = JSON.parse(savedState);
     guesses = state.guesses || [];
@@ -158,24 +176,24 @@ function saveGame() {
   localStorage.setItem(storageKey, JSON.stringify(state));
 }
 
-  // Render game board
+// Render game board
 function renderGame() {
   gameBoard.innerHTML = '';
-  
+
   for (let i = 0; i < 5; i++) {
     const row = document.createElement('div');
     row.className = 'game-row';
-    
+
     for (let j = 0; j < 5; j++) {
       const cell = document.createElement('div');
       cell.className = 'game-cell';
-      
+
       if (i < guesses.length) {
         // Already guessed row
         const guess = guesses[i];
         const letter = guess.word[j] || '';
         const status = guess.status[j];
-        
+
         cell.textContent = letter;
         cell.classList.add('filled');
         cell.classList.add(status);
@@ -184,10 +202,10 @@ function renderGame() {
         cell.textContent = currentGuess[j];
         cell.classList.add('filled');
       }
-      
+
       row.appendChild(cell);
     }
-    
+
     gameBoard.appendChild(row);
   }
 }
@@ -197,12 +215,12 @@ function evaluateGuess(guess, target) {
   const status = ['absent', 'absent', 'absent', 'absent', 'absent'];
   const targetCounts = {};
   const guessCounts = {};
-  
+
   // Count letters in target
   for (let i = 0; i < target.length; i++) {
     targetCounts[target[i]] = (targetCounts[target[i]] || 0) + 1;
   }
-  
+
   // First pass: mark correct positions (green)
   for (let i = 0; i < guess.length; i++) {
     if (guess[i] === target[i]) {
@@ -210,7 +228,7 @@ function evaluateGuess(guess, target) {
       guessCounts[guess[i]] = (guessCounts[guess[i]] || 0) + 1;
     }
   }
-  
+
   // Second pass: mark present letters (yellow)
   for (let i = 0; i < guess.length; i++) {
     if (status[i] !== 'correct') {
@@ -218,14 +236,14 @@ function evaluateGuess(guess, target) {
       const correctCount = (status.filter((s, idx) => s === 'correct' && guess[idx] === letter)).length;
       const yellowCount = (status.filter((s, idx) => s === 'present' && guess[idx] === letter)).length;
       const totalUsed = correctCount + yellowCount;
-      
+
       if (targetCounts[letter] && totalUsed < targetCounts[letter]) {
         status[i] = 'present';
         guessCounts[letter] = (guessCounts[letter] || 0) + 1;
       }
     }
   }
-  
+
   return status;
 }
 
@@ -243,7 +261,7 @@ function highlightKey(keyValue) {
 // Handle keyboard input
 function handleKeyPress(e) {
   if (gameWon || gameLost) return;
-  
+
   if (e.key === 'Enter') {
     highlightKey('Enter');
     submitGuess();
@@ -275,22 +293,22 @@ function deleteLetter() {
 // Submit guess
 function submitGuess() {
   if (gameWon || gameLost) return;
-  
+
   if (currentGuess.length !== 5) {
     showMessage('Not enough letters');
     return;
   }
-  
+
   if (!VALID_GUESSES.has(currentGuess)) {
     showMessage('Not a valid word');
     return;
   }
-  
+
   const status = evaluateGuess(currentGuess, currentWord);
   guesses.push({ word: currentGuess, status });
   attempt++;
   currentGuess = '';
-  
+
   // Check win/loss
   if (currentWord === guesses[guesses.length - 1].word) {
     gameWon = true;
@@ -301,7 +319,7 @@ function submitGuess() {
   } else {
     showMessage('');
   }
-  
+
   saveGame();
   renderGame();
   updateKeyboard();
@@ -311,12 +329,12 @@ function submitGuess() {
 // Update keyboard colors
 function updateKeyboard() {
   const keyStates = {};
-  
+
   guesses.forEach(guess => {
     for (let i = 0; i < guess.word.length; i++) {
       const letter = guess.word[i];
       const status = guess.status[i];
-      
+
       if (!keyStates[letter] || status === 'correct') {
         keyStates[letter] = status;
       } else if (status === 'present' && keyStates[letter] === 'absent') {
@@ -324,7 +342,7 @@ function updateKeyboard() {
       }
     }
   });
-  
+
   document.querySelectorAll('.key').forEach(key => {
     const letter = key.getAttribute('data-key');
     if (letter && letter.length === 1) {
@@ -371,8 +389,8 @@ function updateShareButton() {
 // Generate share text
 function generateShareText() {
   const result = gameWon ? `${attempt}/5` : 'X/5';
-  let shareText = `spencergreene.com/wordle ${currentDate} ${result}\n\n`;
-  
+  let shareText = `Wordle ${currentDate} ${result}\n\n`;
+
   guesses.forEach(guess => {
     guess.status.forEach(status => {
       if (status === 'correct') {
@@ -385,16 +403,18 @@ function generateShareText() {
     });
     shareText += '\n';
   });
-  
+
+  shareText += `\nspencergreene.com/wordle?date=${currentDate}`;
+
   return shareText;
 }
 
 // Share result using Web Share API
 async function shareResult() {
   if (!gameWon && !gameLost) return;
-  
+
   const shareText = generateShareText();
-  
+
   if (navigator.share) {
     try {
       await navigator.share({
@@ -426,27 +446,33 @@ async function shareResult() {
 function generateDateButtons() {
   dateButtons.innerHTML = '';
   const today = new Date();
-  
+
   for (let i = 0; i < 7; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
-    
+    const dateStr = getLocalISODate(date);
+
     const button = document.createElement('button');
     button.className = 'date-button';
     button.textContent = formatDate(date);
-    
+
     if (dateStr === currentDate) {
       button.classList.add('active');
     }
-    
+
     button.addEventListener('click', () => {
       currentDate = dateStr;
+
+      // Update URL without reloading
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('date', currentDate);
+      window.history.pushState({ path: newUrl.href }, '', newUrl.href);
+
       loadGame();
       generateDateButtons(); // Update active state
       dateMenu.style.display = 'none';
     });
-    
+
     dateButtons.appendChild(button);
   }
 }
@@ -456,10 +482,10 @@ function formatDate(date) {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  
+
   const isToday = date.toDateString() === today.toDateString();
   const isYesterday = date.toDateString() === yesterday.toDateString();
-  
+
   if (isToday) {
     return 'Today';
   } else if (isYesterday) {
