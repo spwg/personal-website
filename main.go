@@ -43,11 +43,7 @@ func defaultBindAddr() string {
 	return "localhost:8080"
 }
 
-// installMiddleware sets up logging and recovery first so that the logging
-// happens first and then recovery happens before any other middleware.
-func installMiddleware(r *gin.Engine) error {
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
+func setupSecureMiddleware(r *gin.Engine) {
 	secureMiddleware := secure.New(secure.Options{
 		AllowedHosts: []string{
 			"spencergreene.com",
@@ -68,19 +64,33 @@ func installMiddleware(r *gin.Engine) error {
 			c.Abort()
 		}
 	})
+}
+
+func setupTrustedProxies(r *gin.Engine) error {
 	var proxies []string
 	proxies = append(proxies, strings.Fields(cloudflareIPv4Addresses)...)
 	proxies = append(proxies, strings.Fields(cloudflareIPv6Addresses)...)
 	if err := r.SetTrustedProxies(proxies); err != nil {
-		return fmt.Errorf("install middleware: %v", err)
+		return fmt.Errorf("set trusted proxies: %v", err)
 	}
 	return nil
+}
+
+// installMiddleware sets up logging and recovery first so that the logging
+// happens first and then recovery happens before any other middleware.
+func installMiddleware(r *gin.Engine) error {
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	setupSecureMiddleware(r)
+	return setupTrustedProxies(r)
 }
 
 func run() error {
 	defer glog.Flush()
 	engine := gin.New()
-	installMiddleware(engine)
+	if err := installMiddleware(engine); err != nil {
+		return err
+	}
 	staticFS, err := fs.Sub(embeddedStatic, "static")
 	if err != nil {
 		return err
