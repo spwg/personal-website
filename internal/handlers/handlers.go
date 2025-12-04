@@ -3,6 +3,7 @@
 package handlers
 
 import (
+	"errors"
 	"io/fs"
 	"net/http"
 	"path"
@@ -15,36 +16,42 @@ type Server struct {
 	static fs.FS
 }
 
-func (s *Server) root(c *gin.Context) {
+func (s *Server) handleRoot(c *gin.Context) {
 	c.FileFromFS(c.Request.URL.Path, http.FS(s.static))
 }
 
-func (s *Server) js(c *gin.Context) {
+func (s *Server) handleJS(c *gin.Context) {
 	c.FileFromFS(path.Base(c.Request.URL.Path), http.FS(s.static))
 }
 
-func (s *Server) css(c *gin.Context) {
+func (s *Server) handleCSS(c *gin.Context) {
 	c.FileFromFS(c.Params.ByName("path"), http.FS(s.static))
 }
 
-func (s *Server) data(c *gin.Context) {
+func (s *Server) handleData(c *gin.Context) {
 	filePath := "data/" + c.Params.ByName("path")
 	c.FileFromFS(filePath, http.FS(s.static))
 }
 
-func (s *Server) wordle(c *gin.Context) {
+func (s *Server) handleWordle(c *gin.Context) {
 	c.FileFromFS("wordle.html", http.FS(s.static))
 }
 
 // InstallRoutes registers the server's routes on the given [*gin.Engine].
 func InstallRoutes(static fs.FS, engine *gin.Engine) error {
+	if static == nil {
+		return errors.New("static fs cannot be nil")
+	}
+	if engine == nil {
+		return errors.New("engine cannot be nil")
+	}
 	s := &Server{
 		static: static,
 	}
-	engine.GET("/", s.root)
-	engine.GET("/css/:path", s.css)
-	engine.GET("/js/:path", s.js)
-	engine.GET("/data/:path", s.data)
-	engine.GET("/wordle", s.wordle)
+	engine.GET("/", s.handleRoot)
+	engine.GET("/css/:path", s.handleCSS)
+	engine.GET("/js/:path", s.handleJS)
+	engine.GET("/data/:path", s.handleData)
+	engine.GET("/wordle", s.handleWordle)
 	return nil
 }
