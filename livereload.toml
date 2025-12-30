@@ -1,0 +1,22 @@
+# livereload.toml
+
+# Command to build the project.
+build = "go build -o main ."
+
+# Command to run the executable.
+run = "./main"
+
+# Comma-separated directories/files to watch.
+watch = ["."]
+
+# Comma-separated directories/files to ignore.
+ignore = [".git", "tmp"]
+
+# Port for the livereload WebSocket server.
+port = 35729
+
+# Host for the livereload server to bind to.
+host = "localhost"
+
+# URL to poll for a health check before reloading.
+health-url = "http://localhost:8080"
