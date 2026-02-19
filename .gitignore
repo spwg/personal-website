@@ -5,4 +5,5 @@ personal-website
 dev
 tmp
 .air.toml
+main.playwright-cli/
 main
