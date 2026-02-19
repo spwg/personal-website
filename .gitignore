@@ -7,3 +7,4 @@ tmp
 .air.toml
 main.playwright-cli/
 main
+.playwright-cli
