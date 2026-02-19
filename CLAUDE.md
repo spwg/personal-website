@@ -20,7 +20,7 @@ fly deploy
 
 ## Architecture
 
-This is a Go web server using the Gin framework that serves a personal website with an embedded Wordle game.
+This is a Go web server using the Gin framework that serves a personal website.
 
 **Request flow in production:** DNS (Cloudflare) → CDN (Cloudflare) → Fly.io → Gin server
 
@@ -31,7 +31,7 @@ This is a Go web server using the Gin framework that serves a personal website w
 
 **Code structure:**
 - `main.go`: Server setup, middleware configuration, embedded assets
-- `internal/handlers/handlers.go`: Route handlers for `/`, `/css/:path`, `/js/:path`, `/data/:path`, `/wordle`
-- `static/`: Frontend files (HTML, CSS, JS) and data files for Wordle
+- `internal/handlers/handlers.go`: Route handlers for `/`, `/css/:path`, `/js/:path`
+- `static/`: Frontend files (HTML, CSS, JS)
 
 **Version sync requirement:** When updating Go version, change both `go.mod` and `Dockerfile` to match.

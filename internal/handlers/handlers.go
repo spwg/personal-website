@@ -28,15 +28,6 @@ func (s *Server) handleCSS(c *gin.Context) {
 	c.FileFromFS(c.Params.ByName("path"), http.FS(s.static))
 }
 
-func (s *Server) handleData(c *gin.Context) {
-	filePath := "data/" + c.Params.ByName("path")
-	c.FileFromFS(filePath, http.FS(s.static))
-}
-
-func (s *Server) handleWordle(c *gin.Context) {
-	c.FileFromFS("wordle.html", http.FS(s.static))
-}
-
 // InstallRoutes registers the server's routes on the given [*gin.Engine].
 func InstallRoutes(static fs.FS, engine *gin.Engine) error {
 	if static == nil {
@@ -51,7 +42,5 @@ func InstallRoutes(static fs.FS, engine *gin.Engine) error {
 	engine.GET("/", s.handleRoot)
 	engine.GET("/css/:path", s.handleCSS)
 	engine.GET("/js/:path", s.handleJS)
-	engine.GET("/data/:path", s.handleData)
-	engine.GET("/wordle", s.handleWordle)
 	return nil
 }
