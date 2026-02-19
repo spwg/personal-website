@@ -6,23 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Spencer Greene, Software Engineer, Brown University Computer Science">
   <title>Spencer Greene</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
-  <h1>Spencer Greene</h1>
-  <p>I'm a software engineer at Google. I studied Computer Science at Brown University.</p>
+  <main>
+    <section class="hero" aria-label="Introduction">
+      <span class="overline">Software Engineer</span>
+      <h1>Spencer Greene</h1>
+      <p class="bio">Building things at <strong>Google</strong>. Studied Computer Science at <strong>Brown University</strong>.</p>
+    </section>
 
-  <h2>Projects</h2>
-  <ul>
-    <li><a href="https://github.com/spwg/weather">WX</a> (<a href="https://wx-weather.fly.dev">wx-weather.fly.dev</a>) – Minimal weather dashboard with hourly and daily forecasts</li>
-    <li><a href="https://github.com/spwg/deepmine">DeepMine</a> – Reinforcement learning with sparse rewards in Minecraft</li>
-    <li><a href="https://github.com/spwg/radar-feeder-tools">Radar Feeder Tools</a> – Raspberry Pi setup for ADS-B flight tracking</li>
-    <li><a href="https://github.com/spwg/rtlsdrmonitoring">RTL-SDR Monitoring</a> – Monitoring tools for RTL-SDR devices</li>
-  </ul>
+    <section class="projects" aria-label="Projects">
+      <h2 class="overline">Selected Projects</h2>
+      <div class="grid">
+        <article class="card card--dark card--wide">
+          <span class="card__tag">Live</span>
+          <h3 class="card__title">WX</h3>
+          <p class="card__desc">Minimal weather dashboard with hourly and daily forecasts.</p>
+          <div class="card__links">
+            <a href="https://wx-weather.fly.dev" class="card__link">wx-weather.fly.dev <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+            <a href="https://github.com/spwg/weather" class="card__link card__link--muted">Source <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+        </article>
 
-  <p>Connect with me on <a href="https://github.com/spwg">GitHub</a> or <a
-      href="https://www.linkedin.com/in/spencerwgreene/">LinkedIn</a>!</p>
+        <article class="card">
+          <h3 class="card__title">DeepMine</h3>
+          <p class="card__desc">Reinforcement learning with sparse rewards in Minecraft.</p>
+          <div class="card__links">
+            <a href="https://github.com/spwg/deepmine" class="card__link">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Radar Feeder Tools</h3>
+          <p class="card__desc">Raspberry Pi setup for ADS-B flight tracking.</p>
+          <div class="card__links">
+            <a href="https://github.com/spwg/radar-feeder-tools" class="card__link">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">RTL-SDR Monitoring</h3>
+          <p class="card__desc">Monitoring tools for RTL-SDR devices.</p>
+          <div class="card__links">
+            <a href="https://github.com/spwg/rtlsdrmonitoring" class="card__link">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="card__title">Wordle</h3>
+          <p class="card__desc">Daily word guessing game. Five letters, five tries.</p>
+          <div class="card__links">
+            <a href="https://github.com/spwg/wordle" class="card__link">GitHub <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <nav class="connect" aria-label="Social links">
+      <a href="https://github.com/spwg" class="pill">GitHub</a>
+      <a href="https://www.linkedin.com/in/spencerwgreene/" class="pill">LinkedIn</a>
+    </nav>
+  </main>
 
   <script>
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
