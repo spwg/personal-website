@@ -4,7 +4,7 @@ http/logsmain
 personal-website
 dev
 tmp
-.air.toml
 main.playwright-cli/
 main
 .playwright-cli
+.gstack/
