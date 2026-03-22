@@ -37,8 +37,8 @@ var (
 )
 
 func defaultBindAddr() string {
-	if os.Getenv("BIND_ADDR") != "" {
-		return os.Getenv("BIND_ADDR")
+	if addr := os.Getenv("BIND_ADDR"); addr != "" {
+		return addr
 	}
 	return "localhost:8080"
 }
