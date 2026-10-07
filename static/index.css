@@ -79,8 +79,7 @@ li {
   line-height: 1.5;
 }
 
-li a:first-child,
-li .title {
+li a:first-child {
   font-weight: 500;
 }
 
