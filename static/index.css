@@ -5,100 +5,86 @@
 }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  line-height: 1.6;
-  color: #111;
-  background: #fff;
+  line-height: 1.65;
+  color: light-dark(#202020, #ededed);
+  background: light-dark(#fff, #181818);
   -webkit-font-smoothing: antialiased;
 }
 
 main {
-  max-width: 600px;
-  padding: 4rem 24px 6rem;
+  width: 100%;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 56px 32px 64px;
 }
 
 a {
-  color: #111;
+  color: light-dark(#174d8c, #a3c9fa);
   text-decoration: underline;
-  text-underline-offset: 2px;
-  text-decoration-color: #bbb;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 a:hover {
-  text-decoration-color: #111;
+  text-decoration-thickness: 2px;
 }
 
-/* ===== Header ===== */
+a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
 
 header {
-  margin-bottom: 1.5rem;
+  margin-bottom: 36px;
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 30px;
+  line-height: 1.2;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.35rem;
+  letter-spacing: -0.6px;
+  margin-bottom: 20px;
 }
 
-header p {
-  color: #555;
-  margin-bottom: 0.5rem;
+h2 {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 600;
+  margin-bottom: 18px;
 }
 
-header strong {
-  color: #111;
-  font-weight: 500;
+ul {
+  list-style: disc outside;
+  padding-left: 21px;
+}
+
+li {
+  padding-left: 3px;
+  margin-bottom: 23px;
+}
+
+li > a {
+  font-weight: 600;
+}
+
+footer {
+  margin-top: 34px;
 }
 
 nav {
   display: flex;
-  gap: 1rem;
-  font-size: 0.875rem;
+  flex-wrap: wrap;
+  gap: 10px 22px;
 }
-
-/* ===== Projects ===== */
-
-h2 {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #999;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.75rem;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  padding: 0.4rem 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-li a:first-child {
-  font-weight: 500;
-}
-
-.source {
-  color: #999;
-  text-decoration-color: #ddd;
-  font-size: 0.8rem;
-  margin-left: 0.25rem;
-}
-
-.source:hover {
-  color: #111;
-  text-decoration-color: #111;
-}
-
-/* ===== Mobile ===== */
 
 @media (max-width: 500px) {
   main {
-    padding: 3rem 20px 4rem;
+    padding: 40px 25px 48px;
+  }
+
+  h1 {
+    font-size: 28px;
   }
 }
